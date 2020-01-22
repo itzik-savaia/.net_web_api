@@ -22,18 +22,18 @@ namespace WebApi.Controllers
         public IActionResult GetUsers()
         {
             UserService userService = new UserService();
-            User user = new User();
+            List<User> ListOfUsers = new List<User>();
 
             try
             {
-                user = userService.GetUsers();
+                ListOfUsers = userService.GetUsers();
+                
             }
             catch (Exception ex)
             {
                 return BadRequest();
             }
-
-            return Ok(user);
+            return Ok(ListOfUsers);
         }
 
 

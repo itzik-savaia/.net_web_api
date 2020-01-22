@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using WebApi.Models;
 
 namespace WebApi.DB
@@ -43,25 +44,35 @@ namespace WebApi.DB
 
         }
         //GetUsers
-        public User GetUsers()
+        public List<User> GetUsers()
         {
-            User user = new User();
+            List<User> ListOfUsers = new List<User>();
             conn.Open();
 
-            string sql = "SELECT * FROM `csharpdb`.users where id";
+            string sql = "SELECT * FROM `csharpdb`.users";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader rdr = cmd.ExecuteReader();
-
-            while (rdr.Read())
+            try
             {
-                user.id = Int32.Parse(rdr["id"].ToString());
-                user.username = rdr["username"].ToString();
-                user.password = rdr["password"].ToString();
-                user.role_option_1 = rdr["role_option_1"].ToString();
-                user.role_option_2 = rdr["role_option_2"].ToString();
-            }
+                
+                while(rdr.Read())
+                {
+                    User user = new User();
+                    user.id = Int32.Parse(rdr["id"].ToString());
+                    user.username = rdr["username"].ToString();
+                    user.password = rdr["password"].ToString();
+                    user.role_option_1 = rdr["role_option_1"].ToString();
+                    user.role_option_2 = rdr["role_option_2"].ToString();
+                    ListOfUsers.Add(user);
+                }
+            }catch(Exception ex)
+            {
 
-            return user;
+            }
+            return ListOfUsers;
+            
+
+            
         }
         //GetUser
         public User GetUser(int id)

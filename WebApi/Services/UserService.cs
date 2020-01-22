@@ -15,13 +15,13 @@ namespace WebApi.Services
 
         }
         //GET all
-        public User GetUsers()
+        public List<User> GetUsers()
         {
-            User user = new User();
+            List<User> ListOfUsers = new List<User>();
             //Get from database 
-            user = db.GetUsers();
+            ListOfUsers = db.GetUsers();
 
-            return user;
+            return ListOfUsers;
         }
 
         //GET one
